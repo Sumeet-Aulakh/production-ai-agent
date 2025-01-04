@@ -1,4 +1,4 @@
-import OpenAI from 'openai'
+import type OpenAI from 'openai'
 import {
   generateImage,
   generateImageToolDefinition,
@@ -18,10 +18,13 @@ export const runTool = async (
   switch (toolCall.function.name) {
     case generateImageToolDefinition.name:
       return generateImage(input)
+
     case redditToolDefinition.name:
       return reddit(input)
+
     case dadJokeToolDefinition.name:
       return dadJoke(input)
+
     default:
       return `Never run this tool: ${toolCall.function.name} again, or else!`
   }

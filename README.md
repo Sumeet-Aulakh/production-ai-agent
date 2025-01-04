@@ -1,19 +1,18 @@
-# Build an AI Agent from Scratch
+# Prototype to Production: Advanced AI Apps
 
-- Building an AI Agent from scratch
-- Using OpenAI's API
-- Using a local database to store messages
+- Watch the workshop on [Frontend Masters](https://frontendmasters.com/workshops/advanced-ai-apps/). 
+- View the [course notes](https://clumsy-humor-894.notion.site/Agents-in-Production-13754fed51a380da8ca0de6a2361a3a3)
 
 ## Setup Instructions
 
 This repo requires **Node.js version 20+** or **bun v1.0.20**.
 
-The `main` branch contains the final application.
-You will also need an [API Key from OpenAI](https://platform.openai.com/settings/organization/api-keys).
+The `main` branch contains the final application. To code along with the workshop, checkout the `step/1` branch. You will also need an [API Key from OpenAI](https://platform.openai.com/settings/organization/api-keys).
 
 ```bash
-git clone https://github.com/Sumeet-Aulakh/ai-agent.git
-cd ai-agent
+git clone https://github.com/Hendrixer/agents-production/.git
+cd agents-production
+git checkout step/1
 npm install # or bun install
 ```
 
@@ -32,8 +31,3 @@ Create an [API Key from OpenAI](https://platform.openai.com/settings/organizatio
 ```
 OPENAI_API_KEY='YOUR_API_KEY'
 ```
-
-## Inspiration
-
-- [Frontend Masters](https://frontendmasters.com/workshops/build-ai-agent/)
-- [Scott Moss](https://github.com/hendrixer)

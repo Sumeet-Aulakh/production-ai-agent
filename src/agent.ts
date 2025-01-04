@@ -1,7 +1,6 @@
-import type { AIMessage } from '../types'
-import { addMessage, getMessages, saveToolResponse } from './memory'
+import { addMessages, getMessages, saveToolResponse } from './memory'
 import { runLLM } from './llm'
-import { logMessage, showLoader } from './ui'
+import { showLoader, logMessage } from './ui'
 import { runTool } from './toolRunner'
 
 export const runAgent = async ({
@@ -11,21 +10,15 @@ export const runAgent = async ({
   userMessage: string
   tools: any[]
 }) => {
-  await addMessage([
-    {
-      role: 'user',
-      content: userMessage,
-    },
-  ])
+  await addMessages([{ role: 'user', content: userMessage }])
 
-  const loader = showLoader('Thinking 🤔...')
+  const loader = showLoader('🤔')
 
   while (true) {
     const history = await getMessages()
-    const response = await runLLM({
-      messages: history,
-      tools,
-    })
+    const response = await runLLM({ messages: history, tools })
+
+    await addMessages([response])
 
     if (response.content) {
       loader.stop()
@@ -33,14 +26,14 @@ export const runAgent = async ({
       return getMessages()
     }
 
-    await addMessage([response])
     if (response.tool_calls) {
       const toolCall = response.tool_calls[0]
       logMessage(response)
-      loader.update(`Executing: ${toolCall.function.name}`)
+      loader.update(`executing: ${toolCall.function.name}`)
+
       const toolResponse = await runTool(toolCall, userMessage)
       await saveToolResponse(toolCall.id, toolResponse)
-      loader.update(`Done! 🎉: ${toolCall.function.name}`)
+      loader.update(`done: ${toolCall.function.name}`)
     }
   }
 }
